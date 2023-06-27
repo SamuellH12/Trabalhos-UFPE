@@ -1,0 +1,85 @@
+
+/*////////////////////////////////////////////////////
+CSS
+////////////////////////////////////////////////////*/
+
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap');
+
+:root {
+    --bs-font-sans-serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans","Liberation Sans",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+body{
+    /* font-family: var(--bs-font-sans-serif); */
+    /* font-family: 'Playfair Display', serif; */
+    font-weight: 200;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+#bg-body {
+    background-image: url("https://images.pexels.com/photos/355887/pexels-photo-355887.jpeg?cs=srgb&dl=pexels-pixabay-355887.jpg&fm=jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    z-index: -100;
+}
+
+.container{
+    padding: 2em;
+}
+
+/* Profile  */
+.profile {
+    padding: 2em;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.profile img {
+    margin: 0 1em 0 0;
+    height: 30vh ;
+    border-radius: 100%;
+}
+
+.profile-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-text h1, h2 { margin: 0.25rem; }
+
+.content{
+    padding: 2em;
+}
+
+
+
+/* Geral */
+.crescer  { transition: 0.3s; } .crescer:hover  { transform: scale(1.05); }
+.crescerp { transition: 0.3s; } .crescerp:hover { transform: scale(1.01); }
+
+.border-black {border: 1px solid #000}
+.border-blue  {border: 1px solid rgb(17, 26, 109)}
+
+.border-round { border-radius: 1vw; }
+
+.bg-blur { backdrop-filter: blur(3px) ;  }
+
+.shadow { box-shadow: 0 0.2rem 1.2rem rgba(0, 0, 0, 0.5);  }
+
+.noDec { text-decoration: none; color: inherit; }
+
+.d-flex{display: flex;}
+.align-center{ align-items: center;}
+.justify-center{ justify-content: center;}
+.column { flex-direction: column;}
+
+.mgt { margin-top: 2em; }
+.mg0 { margin: 0;}
