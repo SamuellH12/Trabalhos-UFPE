@@ -9,72 +9,6 @@ const int MAXN = 5e4;
 const int N = 727;      //vertices
 const int M = 38'428;   //arestas
 
-template<typename T>    
-class Heap {
-
-    T heap[MAXN];
-    int sz = 0;
-
-    private:
-    void max_heapfy(int i){
-        if(i > sz/2) return;
-
-        int l = i*2, r = i*2+1, mx;
-
-        if(r > sz) mx = l;
-        else mx = (heap[l] > heap[r] ? l : r);
-
-        if(heap[mx] > heap[i])
-        {
-            swap(heap[mx], heap[i]);
-            max_heapfy(mx);
-        }
-    }
-
-    void heapfy_reverse(int i)
-    {
-        if(!i) return;
-        int l = i*2, r = i*2+1, mx = i;
-         
-        if(l<=sz && r <= sz) mx = (heap[l] > heap[r] ? l : r);
-        else mx = (l <= sz ? l : i);
-
-        if(heap[mx] > heap[i]) swap(heap[mx], heap[i]);
-
-        heapfy_reverse(i>>1);
-    }
-
-    public:
-    
-    void push(T x)
-    {
-        sz++;
-        heap[sz] = x;
-        heapfy_reverse(sz);
-    }
-
-    T pop()
-    { 
-        swap(heap[1], heap[sz]);
-        sz--;
-        max_heapfy(1);
-        return heap[sz+1];
-    }
-
-    T top(){ return heap[1]; }
-
-    int size(){ return sz; }
-
-    bool empty(){ return !sz; }
-
-    void print(){
-        for(int i=1; i<=sz; i++) cerr << heap[i].id << " " << heap[i].pq << " | ";
-        cerr << endl;
-    }
-
-};
-
-
 
 struct par{
     int first, second;
@@ -143,40 +77,46 @@ class lista {
 
 lista<par> grafo[N + 10];
 int dist[N + 10];
+bool vis[N+10];
+
+int minArray(){
+    int u = -1;
+
+    for(int i=0; i<N; i++)
+    {
+        if(vis[i] || dist[i] >= INF) continue;
+        if(u == -1 || dist[i] < dist[u]) u = i;
+    }
+
+    return u;
+}
 
 int dijkstra(int source, int sink){
 
-    for(int i=0; i<=N; i++) dist[i] = INF;
+    for(int i=0; i<=N; i++) dist[i] = INF, vis[i] = false;
 
-    Heap<par> pq;
-    pq.push(par(0, source));
     dist[source] = 0;
     
-    while(!pq.empty())
+    while(true)
     {
-        int c = -pq.top().first;
-        int u = pq.top().second;
-        pq.pop();
-
-        if(dist[u] < c) continue;
-        if(u == sink) return c;
+        int u = minArray();
+        // cerr << u << " <-" << endl;
+        if(u == -1) break;
+        
+        vis[u] = true;
+        if(u == sink) return dist[u];
         
         auto it = grafo[u].begin();
         while(it != NULL)
         {
             auto v = it->val.first;
             auto w = it->val.second;
-            // cerr << u << " -> " << v << endl;
-            if(dist[v] > dist[u] + w)
-            {
-                dist[v] = dist[u] + w;
-                pq.push(par(-dist[v], v));
-            }
-            // else cerr << "dist " << dist[v] << " " << dist[u] + w << endl;
+
+            if(dist[v] > dist[u] + w) dist[v] = dist[u] + w;
+            // cerr << dist[v] << " ||" << endl; 
 
             it = it->next;
         }
-
     }
     
     return INF;
