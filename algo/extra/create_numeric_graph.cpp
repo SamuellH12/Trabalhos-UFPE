@@ -122,6 +122,16 @@ class AVL_MAP {
 };
 
 
+string label[1000];
+const int N = 727; // quantidade de vertices
+const int M = 38'428;   //arestas
+struct T {
+    int u, v, w;
+    T(int u, int v, int w) : u(u), v(v), w(w) {}
+    T(){}
+};
+
+T arestas[M + 10];
 
 
 int main(){
@@ -134,17 +144,34 @@ int main(){
 
     string U, V; 
     int u, v, d;
+    int cnt = 0;
 
     while(cin >> U >> V >> d)
     {
-        if(!mapa.count(U)) mapa[U] = mapa.size();
-        if(!mapa.count(V)) mapa[V] = mapa.size();
+        if(!mapa.count(U)) u = mapa[U] = mapa.size(), label[u] = U;
+        if(!mapa.count(V)) v = mapa[V] = mapa.size(), label[v] = V;
         
         u = mapa[U];
         v = mapa[V];
 
         cout << u << " " << v << " " << d << endl;
+        arestas[cnt++] = T(u, v, d);
     }
+
+    freopen("label.txt", "w", stdout);
+
+    for(int i=0; i<N; i++)
+        cout << i << " " << label[i] << endl;
+
+
+    freopen("labelPlusGraph.txt", "w", stdout);
+    // cout << N << " " << cnt << endl;
+
+    for(int i=0; i<N; i++)
+        cout << i << " " << label[i] << endl;
+
+    for(int i=0; i<cnt; i++)
+        cout << arestas[i].u << " " << arestas[i].v << " " << arestas[i].w << endl;
 
     return 0;
 }
