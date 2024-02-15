@@ -3,6 +3,8 @@
 #define INF 0x3f3f3f3f3f3f3f3f
 #define int long long
 using namespace std;
+#define clockI  clock_t start, end; start = clock()
+#define clockII end=clock(); double time_ = double(end - start) / double(CLOCKS_PER_SEC); cout<<time_<<" s"<<endl
 
 const int MAXN = 5e4;
 
@@ -66,11 +68,6 @@ class Heap {
     int size(){ return sz; }
 
     bool empty(){ return !sz; }
-
-    void print(){
-        for(int i=1; i<=sz; i++) cerr << heap[i].id << " " << heap[i].pq << " | ";
-        cerr << endl;
-    }
 
 };
 
@@ -166,13 +163,13 @@ int dijkstra(int source, int sink){
         {
             auto v = it->val.first;
             auto w = it->val.second;
-            // cerr << u << " -> " << v << endl;
+            // if(op!=3) cout << u << " -> " << v << endl;
             if(dist[v] > dist[u] + w)
             {
                 dist[v] = dist[u] + w;
                 pq.push(par(-dist[v], v));
             }
-            // else cerr << "dist " << dist[v] << " " << dist[u] + w << endl;
+            // else if(op!=3) cout << "dist " << dist[v] << " " << dist[u] + w << endl;
 
             it = it->next;
         }
@@ -184,27 +181,29 @@ int dijkstra(int source, int sink){
 
 string label[N + 10];
 
-int32_t main(){    
+int32_t main(int32_t argc, char* argv[]){    
     int origem = -1, destino = -1, op;
     int id; string s, t, r;
 
-    cout << "Deseja inserir o codigo numerico do aeroporto (digite 1) ou o codigo de tres letras (digite 2)?" << endl;
-    cout << "(OBS: codigos numericos podem ser acessados no arquivo label.txt) " << endl;
+    if(argc > 1) op = 3;
+
+    if(op!=3) cout << "Deseja inserir o codigo numerico do aeroporto (digite 1) ou o codigo de tres letras (digite 2)?" << endl;
+    if(op!=3) cout << "(OBS: codigos numericos podem ser acessados no arquivo label.txt) " << endl;
     cin >> op;
     
 
     if(op&1)
     {
-        cout << "Digite o codigo (numerico) do aeroporto de origem: \n -> ";
+        if(op!=3) cout << "Digite o codigo (numerico) do aeroporto de origem: \n -> ";
         cin >> origem;
-        cout << endl << "Digite o codigo (numerico) do aeroporto de destino: \n -> ";
+        if(op!=3) cout << endl << "Digite o codigo (numerico) do aeroporto de destino: \n -> ";
         cin >> destino;
     }
     else
     {
-        cout << "Digite o codigo (de tres letras) do aeroporto de origem: \n -> ";
+        if(op!=3) cout << "Digite o codigo (de tres letras) do aeroporto de origem: \n -> ";
         cin >> s;
-        cout << endl << "Digite o codigo (de tres letras) do aeroporto de destino: \n -> ";
+        if(op!=3) cout << endl << "Digite o codigo (de tres letras) do aeroporto de destino: \n -> ";
         cin >> t;
     }
 
@@ -228,7 +227,7 @@ int32_t main(){
     if(origem >= N){cout << "Not Found" << endl; return 0;}
     if(destino >= N){cout << "Not Found" << endl; return 0;}    
 
-    cout << endl << "de " << label[origem] << "(" << origem << ") para " << label[destino] << "(" << destino << ")" << endl;
+    if(op!=3) cout << endl << "de " << label[origem] << "(" << origem << ") para " << label[destino] << "(" << destino << ")" << endl;
 
 
     // freopen("grafo_numerico.txt", "r", stdin);
@@ -238,13 +237,15 @@ int32_t main(){
         grafo[u].push(par(v, c));
     }
 
+    clockI;
     auto d = dijkstra(origem, destino);
 
-    cout << "Distancia: ";
+    if(op!=3) cout << "Distancia: ";
     
-    if(d < INF) cout << d << endl;
-    else cout << "INF" << endl;
+    if(d < INF){ if(op!=3) cout << d << endl;}
+    else{ if(op!=3) cout << "INF" << endl; }
 
+    clockII;
 
     return 0;
 }
