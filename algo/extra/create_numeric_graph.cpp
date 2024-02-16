@@ -132,6 +132,7 @@ struct T {
 };
 
 T arestas[M + 10];
+// T arestas[3606803  + 1]; //com arestas repetidas
 
 
 int main(){
@@ -173,6 +174,7 @@ int main(){
     for(int i=0; i<cnt; i++)
         cout << arestas[i].u << " " << arestas[i].v << " " << arestas[i].w << endl;
 
+    cerr << "Success" << endl;
     return 0;
 }
 

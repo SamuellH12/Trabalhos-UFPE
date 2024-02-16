@@ -1,0 +1,14 @@
+Com arestas repetidas
+
+Medias
+
+Dijkstra n log:      0.227
+Dijkstra quadratico: 0.19099999999999998
+Bellman-Ford:        61.7068
+
+
+Desvio Padrao
+
+Dijkstra n log:      0.09526384413826686
+Dijkstra quadratico: 0.031106269464530788
+Bellman-Ford:        14.150985342371039

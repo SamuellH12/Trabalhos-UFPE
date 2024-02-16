@@ -10,6 +10,7 @@ const int MAXN = 5e4;
 
 const int N = 727;      //vertices
 const int M = 38'428;   //arestas
+// const int M = 3606803;   //arestas repetidas
 
 
 struct par{
@@ -29,16 +30,17 @@ struct par{
 
 
 
-struct Node
-{
-    par val;
-    Node* next = NULL;
 
-    Node(par val) : val(val) {}
-};
 
 template<typename T>    
 class lista {
+    struct Node
+    {
+        T val;
+        Node* next = NULL;
+
+        Node(T val) : val(val) {}
+    };
 
     private:
 
@@ -102,11 +104,10 @@ int dijkstra(int source, int sink){
     while(true)
     {
         int u = minArray();
-        // cerr << u << " <-" << endl;
         if(u == -1) break;
         
         vis[u] = true;
-        if(u == sink) return dist[u];
+        // if(u == sink) return dist[u];
         
         auto it = grafo[u].begin();
         while(it != NULL)
@@ -121,7 +122,7 @@ int dijkstra(int source, int sink){
         }
     }
     
-    return INF;
+    return dist[sink];
 }
 
 string label[N + 10];

@@ -14,7 +14,7 @@ N = 727
 
 lista = []
 
-for _ in range(100):
+for _ in range(1000):
     temp = [0, 0, 0]
     os.system("echo > in.txt 3 " + str(random.randint(0,N-1)) + " " + str(random.randint(0,N-1)))
     
@@ -43,10 +43,10 @@ for s, t, u in lista:
     sum_a += float(s[:-2])
     sum_b += float(t[:-2])
     sum_c += float(u[:-2])
-    # print( "Dijkstra n log:      " + s[:-2])
-    # print( "Dijkstra quadratico: " + t[:-2])
-    # print( "Bellman-Ford:        " + u[:-2])
-    # print("-------------------------------")
+    print( "Dijkstra n log:      " + s[:-2])
+    print( "Dijkstra quadratico: " + t[:-2])
+    print( "Bellman-Ford:        " + u[:-2])
+    print("-------------------------------")
 
 ln = len(lista)
 

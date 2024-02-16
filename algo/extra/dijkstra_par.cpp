@@ -10,6 +10,7 @@ const int MAXN = 5e4;
 
 const int N = 727;      //vertices
 const int M = 38'428;   //arestas
+// const int M = 3606803;   //arestas repetidas
 
 template<typename T>    
 class Heap {
@@ -90,16 +91,17 @@ struct par{
 
 
 
-struct Node
-{
-    par val;
-    Node* next = NULL;
-
-    Node(par val) : val(val) {}
-};
 
 template<typename T>    
 class lista {
+
+    struct Node
+    {
+        T val;
+        Node* next = NULL;
+
+        Node(T val) : val(val) {}
+    };
 
     private:
 
@@ -156,7 +158,7 @@ int dijkstra(int source, int sink){
         pq.pop();
 
         if(dist[u] < c) continue;
-        if(u == sink) return c;
+        // if(u == sink) return c;
         
         auto it = grafo[u].begin();
         while(it != NULL)
@@ -176,7 +178,7 @@ int dijkstra(int source, int sink){
 
     }
     
-    return INF;
+    return dist[sink];
 }
 
 string label[N + 10];

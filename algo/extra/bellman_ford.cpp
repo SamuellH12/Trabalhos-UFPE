@@ -10,6 +10,7 @@ const int MAXN = 5e4;
 
 const int N = 727;      //vertices
 const int M = 38'428;   //arestas
+// const int M = 3606803;   //arestas repetidas
 
 struct aresta {
     int u, v, w;
@@ -17,16 +18,16 @@ struct aresta {
     aresta(){}
 };
 
-struct Node
-{
-    aresta val;
-    Node* next = NULL;
-
-    Node(aresta val) : val(val) {}
-};
 
 template<typename T>    
 class lista {
+    struct Node
+    {
+        T val;
+        Node* next = NULL;
+
+        Node(T val) : val(val) {}
+    };
 
     private:
 

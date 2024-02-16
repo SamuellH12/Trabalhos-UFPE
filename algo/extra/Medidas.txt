@@ -1,0 +1,14 @@
+
+
+Medias
+
+Dijkstra n log:      0.0024589999999999955
+Dijkstra quadratico: 0.0022739999999999956
+Bellman-Ford:        0.21502300000000038
+
+
+Desvio Padrao
+
+Dijkstra n log:      0.005119406117900767
+Dijkstra quadratico: 0.0048192244189288235
+Bellman-Ford:        0.06588866724255399

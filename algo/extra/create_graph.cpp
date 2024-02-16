@@ -196,12 +196,13 @@ int main(){
 
     AVL<string> mapa, airports;
     string s, id;
+    int cnt = 0;
 
     while( canRead() )
     {
         id = Origin_airport + Destination_airport + Distance;
 
-        if(mapa.count(id)) continue;
+        if(mapa.count(id)) continue;    //para evitar arestas repetidas
         mapa.insert(id);
 
         airports.insert(Origin_airport);
