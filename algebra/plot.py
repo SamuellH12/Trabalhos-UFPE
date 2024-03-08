@@ -1,4 +1,5 @@
 import pygame, random
+from math import sqrt
 from pygame.locals import *
 
 
@@ -23,6 +24,26 @@ clock = pygame.time.Clock()
 
 def DOT(x, y ):
     return ( x*-C + DELTAX, y*C + DELTAY )
+
+
+def sub(pt1, pt2):
+    return (pt1[0]-pt2[0], pt1[1]-pt2[1])
+def add(pt1, pt2):
+    return (pt1[0]+pt2[0], pt1[1]+pt2[1])
+delta = 6
+def norm(pt1):
+    sz = sqrt(pt1[0]*pt1[0] + pt1[1]*pt1[1])
+    return ((pt1[0]/sz) * delta, (pt1[1]/sz) * delta)
+
+def drawVector(pt, dt, color = (0, 0, 200, 50), sz = 1):
+    pygame.draw.line(tela, color, dt, pt, sz)
+    d1 = add(norm(rot45V(sub(dt, pt))), dt)
+    d2 = sub(dt, pt)
+    for _ in range(7):
+        d2 = rot45V(d2)
+    d2 = add(norm(d2), dt)
+    pygame.draw.polygon(tela, color, (dt, d2, d1 ) )
+
 
 
 def autoVetor(x, y):
@@ -61,13 +82,16 @@ def Cruz( x , y ):
 def Irreal( x , y ):
    return DOT(  y , -x )
 
+def rot45( x , y ):
+   return DOT( x+y, x-y )
+def rot45V( pt ):
+   return rot45(pt[0], pt[1])
 
 def base( x , y ):
    return DOT( x, y )
 
 def TL( x , y ):
-   return Xis(x, y)
-
+   return vortice(x, y)
 
 
 while True:
@@ -94,14 +118,18 @@ while True:
     # retas
     for x in range(-LIM, LIM + 1):
         for y in range(-LIM, LIM + 1):
+            if(x % md != 0 or y % md != 0):
+                continue
+
             pt = DOT(x, y)
             dt = TL(x, y)
 
+            #desenha os vetores do ponto original para o após a TL
             if(x % md == 0 and y % md == 0):
-                pygame.draw.line(tela, (0, 0, 200, 50), dt, pt, 1)
+                drawVector(pt, dt)
 
             pygame.draw.circle(tela, RED, pt, 1)
-            pygame.draw.circle(tela, GREEN, dt, 1)
+            # pygame.draw.circle(tela, GREEN, dt, 1)
 
     # for x in range(-LIM, LIM + 1):
     #     for y in range(-LIM, LIM + 1):
@@ -115,8 +143,8 @@ while True:
     #         dt = TL(x, y)
     #         pygame.draw.circle(tela, GREEN, dt, 1)
 
-    
-
+    md2 = 10
+    #desenha as linhas girando
     for i in range(-100, 100):
         v0 = v
         v1 = [v0[0] * i / 100, v0[1] * i / 100]
@@ -129,6 +157,10 @@ while True:
         pygame.draw.line(tela, (100, 0, 100), dt0, dt1, 3)
         pygame.draw.circle(tela, RED, pt0, 1)
         pygame.draw.circle(tela, GREEN, dt0, 1)
+        
+        if( i % md2 == 0 and i % md2 == 0):
+            drawVector(pt1, dt1, GREEN, sz=3)
+
 
     for i in range(-100, 100):
         v0 = v

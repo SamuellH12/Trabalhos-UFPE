@@ -1,130 +1,64 @@
 #include <bits/stdc++.h>
+#define endl '\n'
 using namespace std;
 
-template<typename T>    
-class pilha {
+const int MAXN = 1e4 + 10;
 
-    private:
+int pai[MAXN], sz[MAXN];
 
-    struct Node
-    {
-        T val;
-        Node* next = NULL;
+int find(int u){ return u == pai[u] ? u : pai[u] = find(pai[u]); }
 
-        Node(T val) : val(val) {}
-    };
+void join(int u, int v){
+    u = find(u);
+    v = find(v);
 
-    int sz = 0;
-    Node* head = NULL;    
+    if(u == v) return;
+    if(sz[v] > sz[u]) swap(v, u);
 
-    public:
+    pai[v] = u;
+    sz[u] += sz[v];
+}
 
-    T top(){ return head->val; }
-
-    T pop()
-    {
-        Node* old = head;
-
-        head = old->next;
-        sz--;
-
-        return old->val;
-    }
-
-    void push(T x)
-    {
-        Node* nw = new Node(x);
-        
-        nw->next = head;
-        head = nw;
-        
-        sz++;
-    }
-
-    int size(){ return sz; }
-
-    bool empty(){ return !sz; }
-};
-
-template<typename T>    
-class fila {
-
-    private:
-
-    struct Node
-    {
-        T val;
-        Node* next = NULL;
-
-        Node(T val) : val(val) {}
-    };
-
-
-    int sz = 0;
-    Node* head = NULL;
-    Node* tail = NULL;
-
-    public:
-
-    T front(){ return head->val; }
-    T back() { return tail->val; }
-
-    T pop()
-    {
-        Node* old = head;
-
-        head = head->next;
-
-        if(head == NULL) tail = NULL;
-
-        sz--;
-
-        return old->val;
-    }
-
-    void push(T x)
-    {
-        Node* nw = new Node(x);
-        
-        if(head == NULL) head = nw;
-        if(tail) tail->next = nw;
-        
-        tail = nw;
-
-        sz++;
-    }
-
-    int size(){ return sz; }
-    bool empty(){ return !sz; }
-};
+struct par{ int u, v; par(int u, int v) : u(u), v(v){} };
 
 int main(){
-
-    int op;
-    string x;
-
-    pilha<string> p;
-
-    cout << "---------PILHA-----------" << endl;
-    while(cin >> op && ~op)
+    ios::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+    int t, caso=0; cin >> t; 
+    while(t--)
     {
-        if(op == 1) cin >> x, p.push(x);
-        if(op == 2) cout << "Top: " << p.top() << endl;
-        if(op == 3) cout << "Siz: " << p.size() << endl;
-        if(op == 4) cout << "Emp? " << p.empty() << endl;
-        if(op == 5) cout << "Pop " << p.pop() << endl;
-    }
+        int n, m, q;
+        cin >> n >> m >> q;
 
-    fila<string> f;
-    cout << "---------FILA-----------" << endl;
-    while(cin >> op && ~op)
-    {
-        if(op == 1) cin >> x, f.push(x);
-        if(op == 2) cout << "Frnt: " << f.front() << endl;
-        if(op == 2) cout << "back: " << f.back() << endl;
-        if(op == 3) cout << "Siz: "  << f.size() << endl;
-        if(op == 4) cout << "Emp? "  << f.empty() << endl;
-        if(op == 5) cout << "Pop  "  << f.pop() << endl;
+        for(int i=0; i<=n*n; i++) sz[i] = 1, pai[i] = i;
+
+        int maxM = 2*(n*n-n), p = 2*n-1;
+
+        auto aresta = [&](int id)
+        {
+            int nvl = id/p;
+
+            //parede lateral
+            if(id%p < n-1) return par((nvl*n) + id%p , (nvl*n) + id%p + 1);
+
+            return par((nvl*n) + id%p - (n-1) , (nvl*n) + id%p - (n-1) + n);
+        };
+
+        for(int i=0, id; i<m; i++)
+        {
+            cin >> id;
+            auto [u, v] = aresta(id);
+            join(u, v);
+        }
+
+        int u, v, qa=0;
+        while(q--)
+        {
+            cin >> u >> v;
+            cout << caso << "." << qa++ << " " << (find(u) == find(v)) << endl;
+        }
+        
+        caso++;
+        cout << endl;
     }
 
     return 0;

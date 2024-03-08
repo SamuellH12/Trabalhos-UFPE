@@ -1,0 +1,105 @@
+5-1 : https://drive.google.com/file/d/1XZFFSMdfvqx2Ig1pHCfa3XaxCKvzD3Tg/view
+Latchs
+
+- Circuito combinacional: recebe uma entrada e dá uma saída baseada em uma lógica
+- Circuito sequencial: recebe uma entrada e com base em um estado e entradas anteriores
+	- Estado: um conjunto de variáveis que definem seus valores sob as entradas passadas e definem os comportamentos futuros do sistema.
+
+Clock
+ Ciclo de trabalho: a porcentagem de tempo que um relógio está no seu nível de asserção. = tL/Period
+ Período: Tempo entre dois pulsos
+ Frequencia: 1/período
+
+Elemento biestável: dois NOTs em X
+Ponto Meta-estável: ocorrem quando ambas as saídas estão exatamente entre o valor alto e baixo
+
++ Latch: Altera o estado a qualquer momento devido à alteração de entrada
++ Flip-flop: Muda o estado SOMENTE quando uma borda ou pulso do relógio é aplicado
+
+
+# LATCHs
+
+ - RS: Possui duas entradas, uma de SET e outra de RESET. 00 mantém o estado atual. Dois NOR em X. Meta Estabilidade se a entrada mudar de 11 para 00.
+
+ - R'S': Entradas invertidas com relação ao RS. Dois NAND em X.
+
+ - RS Gatilhado: RS mas com uma entrada C que funciona como enable. Adicionadas 2 portas NAND para controlar o R e o S
+
+ - D: Possui apenas uma entrada D que diz qual valor deve ser armazenado e + uma entrada C para o enable/clock. RS gatilhado mas S = D e R = !D.
+   A entrada D não deve mudar em um intervalo de Tsetup + Thold, que ocorre logo antes e depois, respectivamente, de uma posedge de C.
+
+LATCH é sensível a nível. Isto é, ele altera de valor sempre que C = 1
+
+
+//////////////////////////////
+
+5-2 : https://drive.google.com/file/d/1qyRSogYcql6yNAmfWpraTzB3VdVaRTox/view
+flip-flops
+
+# FLIP-FLOPs
+
+ - D: É formado por dois Latchs D. Um deles atualiza seu valor com base numa entrada D quando o clk é 0. O segundo altera seu valor com base na saída Q do primeiro latch quando o relógio é 1. Isso faz com que a saída do flip-flop só se altere quando o clk passa de 0 para 1, ou seja, nas bordas positivas posedges do clk. A entrada D não deve mudar em um intervalo de Tsetup + Thold, que ocorre logo antes e depois, respectivamente, de uma posedge de C.
+ - SR: Altera a saída na Negedge do clk. Possui um Set e Reset. Hold = 00.
+ - JK: Posedge. Se J==K -> Hold; senao Q <- J
+ - T: Possui um enable. Quando EN = 1, inverte a saída.
+
+
+Entradas Assíncronas: Maioria dos flip-flops tem duas entradas assíncronas Preset e Reset (ou Clear).
+
+
+Temporização:
+
+Tffpd -> Delay entre a borda e a mudança de valores do FF (min, max)
+Tcomb -> Delay do circuito de lógica combinacional (min, max)
+Tsetup-> Tempo que o input deve estar estável antes da borda (min)
+Thold -> Tempo que o input deve estar estável depois da borda (min)
+Tclok -> Período do clk
+
+o Tclk_min > Tffdp_max + tcomb_max + Tsetup
+o Thold < Tcomb_min + Tffdp_max
+
+
+////////////////////////////////////
+
+5-3 : https://drive.google.com/file/d/1QrTPP4FUpYLjCA0ZSN2HjkuMVckKtwZh/view
+Registradores e Contadores
+
+
+# Registrador: um conjunto de flip-flops que armazena N bits de informação.
+
+ - MSI 4-Bit Register: 4 ff. 4 entradas D para setar os ff. Entrada clk e clear.
+
+ - MSI Octal Latch: 8 ff. 8 entradadas D. Uma entrada C de enable pra alterar. E uma entrada OE de output enable.
+
+ - De Deslocamento: Possui entradas LR que definem se deve-se shiftar os bits pra direita ou esquerda. E uma entrada a mais que diz qual valor deve ser colocado no lugar dos bits originais.
+
+ - MSI “Universal” Shift Register: Shift left (10) // Shift right (01) // Load (11) // Hold (00)
+
+
+# Contadores: Circuitos que podem incrementar ou decrementar uma contagem de 1 unidade(FF T, na maioria)
+
+ - Contador Síncrono: Possui um ENable. FF T muda de estado quando todos os menos significativos são 1
+ - MSI 4-Bit Counter:
+ - Binary Counter with Load: Possui uma saída RCO que indica quando chega em 15
+
+
+///////////////////////////////////
+
+5-4: https://drive.google.com/file/d/1d3XaCRYvh_lHxbBclfSh0Jjod007bkBh/view
+Máquinas de Estados Finitos
+
+
+Moore: Saída depende do estado e apenas do estado
+Mealy: Saída depende do estado e do input
+
+
+EQUAÇÕES CARACTERÍSTICAS
+
+ - FF_D:    Q* = D
+ - FF_JK:   Q* = JQ' + K'Q
+ - FF_SR:   Q* = S + R'Q
+ - FF_T:    Q* = Q'
+ - FF_T+EN: Q* = ENQ' + EN'Q
+
+
+
