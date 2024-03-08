@@ -63,7 +63,13 @@ server <- function(input, output) {
   })
   
   
-  # output$lineg <- render
+  output$lineg <- renderPlot({
+    dataFilter = data[data$Index == (input$Classe) & data$Date >= min_time() & data$Date <= max_time(),]
+    yValue = dataFilter$Close;
+    xValue = 1:length(yValue)
+    dataL = data.frame(xValue, yValue)
+    ggplot(dataL, aes(x=xValue, y=yValue)) + geom_line()
+  })
   
   
   
