@@ -61,7 +61,7 @@ ui <- dashboardPage(
     
     # Medidas
     fluidRow(
-      titlePanel(h1("Medidas de Novos Casos por dia", style = "padding:0.25em; border:0.25em solid steelblue;")),
+      titlePanel(h1("Medidas de Novos Casos por dia (suavizado)", style = "padding:0.25em; border:0.25em solid steelblue;")),
       valueBoxOutput("media"),
       valueBoxOutput("moda"),
       valueBoxOutput("mediana"),
@@ -71,7 +71,7 @@ ui <- dashboardPage(
     ),
     
     fluidRow(
-      titlePanel(h1("Medidas de Novas Mortes por dia", style = "border-color:darkred; padding:0.25em; border:0.25em solid darkred;")),
+      titlePanel(h1("Medidas de Novas Mortes por dia (suavizado)", style = "border-color:darkred; padding:0.25em; border:0.25em solid darkred;")),
       valueBoxOutput("media2"),
       valueBoxOutput("moda2"),
       valueBoxOutput("mediana2"),
@@ -102,8 +102,8 @@ server <- function(input, output) {
   
   #######  PLOTS  #######
   
-  output$histo <- renderPlot({ hist(updatedData()$new_cases_smoothed ,col="steelblue",xlab="Casos", main="Quantidade de Casos por dia") })
-  output$histo2<- renderPlot({ hist(updatedData()$new_deaths_smoothed,col="darkred",  xlab="Mortes",main="Quantidade de Mortes por dia")  })
+  output$histo <- renderPlot({ hist(updatedData()$new_cases_smoothed ,col="steelblue",xlab="Casos", main="Quantidade de Casos por dia (suavizado)") })
+  output$histo2<- renderPlot({ hist(updatedData()$new_deaths_smoothed,col="darkred",  xlab="Mortes",main="Quantidade de Mortes por dia (suavizado)")  })
   
   
   output$lineg <- renderPlot({
@@ -111,7 +111,7 @@ server <- function(input, output) {
     
     ggplot(data=dataL, aes(x=date)) + 
     geom_line(aes(y = dataL$new_cases_smoothed), color="steelblue") +
-    xlab("Tempo") + ylab("Novos Casos")
+    xlab("Tempo") + ylab("Novos Casos (suavizado)")
   })
   
   output$lineg2 <- renderPlot({
@@ -119,12 +119,12 @@ server <- function(input, output) {
     
     ggplot(data=dataL, aes(x=date)) + 
     geom_line(aes(y = dataL$new_deaths_smoothed), color="darkred") +
-    xlab("Tempo") + ylab("Novas Mortes")
+    xlab("Tempo") + ylab("Novas Mortes (suavizado)")
   })
 
   
-  output$boxpl <- renderPlot({ boxplot(updatedData()$new_cases_smoothed, col="steelblue", main="Casos por dia")  })
-  output$boxpl2<- renderPlot({ boxplot(updatedData()$new_deaths_smoothed, col="darkred", main="Mortes por dia") })
+  output$boxpl <- renderPlot({ boxplot(updatedData()$new_cases_smoothed, col="steelblue", main="Casos por dia (suavizado)")  })
+  output$boxpl2<- renderPlot({ boxplot(updatedData()$new_deaths_smoothed, col="darkred", main="Mortes por dia (suavizado)") })
   
   
   Mode <- function(x) {
