@@ -15,6 +15,7 @@ C = 5
 idg = 0
 giro = [(-1, 1), (-1, -1), (1, -1), (1, 1)]
 v = [100, 0]
+sqrt2 = sqrt(2)
 
 pygame.init()
 tela = pygame.display.set_mode((WIDTH, HEIGTH))
@@ -82,16 +83,25 @@ def Cruz( x , y ):
 def Irreal( x , y ):
    return DOT(  y , -x )
 
-def rot45( x , y ):
-   return DOT( x+y, x-y )
+def hadamart( x , y ):
+   return DOT( (x+y)/sqrt2, (x-y)/sqrt2 )
+
+def rot45(x, y):
+    return DOT((x-y)*sqrt2/2, (x+y)*sqrt2/2)
+
 def rot45V( pt ):
    return rot45(pt[0], pt[1])
+
+def rot90(x, y):
+    xx = (x-y)*sqrt2/2
+    yy = (x+y)*sqrt2/2
+    return rot45(xx, yy)
 
 def base( x , y ):
    return DOT( x, y )
 
 def TL( x , y ):
-   return vortice(x, y)
+   return Irreal(x, y)
 
 
 while True:
@@ -130,6 +140,8 @@ while True:
 
             pygame.draw.circle(tela, RED, pt, 1)
             # pygame.draw.circle(tela, GREEN, dt, 1)
+            
+
 
     # for x in range(-LIM, LIM + 1):
     #     for y in range(-LIM, LIM + 1):
